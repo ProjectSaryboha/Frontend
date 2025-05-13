@@ -1,0 +1,7 @@
+[
+  { "category": "Meat & Fish", "averagePrice": 6.04 },
+  { "category": "Snacks & Sweets", "averagePrice": 3.28 },
+  { "category": "Dairy", "averagePrice": 2.82 },
+  { "category": "Sauces & Spreads", "averagePrice": 2.30 },
+  { "category": "Drinks", "averagePrice": 2.35 }
+]

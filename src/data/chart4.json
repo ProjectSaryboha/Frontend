@@ -1,0 +1,7 @@
+[
+  { "product": "Beef", "category": "Meat & Fish", "price": 8.2 },
+  { "product": "Pork", "category": "Meat & Fish", "price": 7.1 },
+  { "product": "Chicken", "category": "Meat & Fish", "price": 6.5 },
+  { "product": "Fish", "category": "Meat & Fish", "price": 5.6 },
+  { "product": "Cheese", "category": "Dairy", "price": 4.5 }
+]
