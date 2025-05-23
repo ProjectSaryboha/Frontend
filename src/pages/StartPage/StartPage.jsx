@@ -1,7 +1,10 @@
+import { NavLink } from "react-router-dom"
+
+import module from "./StartPage.module.css"
 
 const StartPage = () => {
     return (
-        <div>StartPage</div>
+        <NavLink className={module.link} to="/home">Home</NavLink>
     )
 }
 
