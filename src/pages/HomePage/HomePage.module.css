@@ -1,13 +1,26 @@
 .container {
-  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  padding: 30px;
   width: 100%;
+  background-color: #ddd;
+  background-image: linear-gradient(
+      rgba(46, 47, 66, 0.7),
+      rgba(46, 47, 66, 0.7)
+    ),
+    url(../image/supermarket.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+}
+
+.childContainer {
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   gap: 2vw;
   flex-wrap: wrap;
-  background-color: #ddd;
 }
 
 .dataCard {

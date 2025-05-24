@@ -1,0 +1,31 @@
+.container {
+  height: 100vh;
+  width: 100%;
+  background-image: linear-gradient(
+      rgba(46, 47, 66, 0.7),
+      rgba(46, 47, 66, 0.7)
+    ),
+    url(../image/supermarket.jpeg);
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.linkContainer {
+  display: flex;
+  background: white;
+  font-family: cursive;
+  padding: 40px;
+}
+
+.link {
+  font-size: 28px;
+  stroke: #9fb7ce;
+}
+
+.link:hover {
+  color: rgb(40, 15, 129);
+}

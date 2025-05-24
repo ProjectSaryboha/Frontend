@@ -8,6 +8,8 @@ import chart2 from "./../../data/chart2.json";
 import chart3 from "./../../data/chart3.json";
 import chart4 from "./../../data/chart4.json";
 
+import ChoiceBoxButton from "../../components/ChoiceBoxButton/ChoiceBoxButton";
+
 defaults.maintainAspectRatio = false;
 defaults.responsive = true;
 
@@ -51,75 +53,78 @@ const mapChartData = (chartData, labelKey, dataKey) => ({
 const HomePage = () => {
     return (
         <div className={module.container}>
-            <div className={`${module.dataCard} ${module.categoryCard}`}>
-                <Line
-                    data={mapChartData(chart1, "product", "price")}
-                    options={{
-                        ...commonChartOptions,
-                        plugins: { ...commonChartOptions.plugins, title: { text: "Product Price Over Time" } },
-                    }}
-                />
-            </div>
-
-            <div className={module.dataRow}>
+            <ChoiceBoxButton />
+            <div className={module.childContainer}>
                 <div className={`${module.dataCard} ${module.categoryCard}`}>
-                    <Doughnut
-                        data={{
-                            labels: chart2.map((data) => data.category),
-                            datasets: [
-                                {
-                                    label: "Count",
-                                    data: chart2.map((data) => data.productCount),
-                                    backgroundColor: commonColors,
-                                    borderColor: commonColors,
-                                },
-                            ],
-                        }}
+                    <Line
+                        data={mapChartData(chart1, "product", "price")}
                         options={{
                             ...commonChartOptions,
-                            plugins: { ...commonChartOptions.plugins, title: { text: "Product Count Over Category" } },
+                            plugins: { ...commonChartOptions.plugins, title: { text: "Product Price Over Time" } },
                         }}
                     />
                 </div>
 
-                <div className={`${module.dataCard} ${module.categoryCard}`}>
-                    <Bar
-                        data={{
-                            labels: chart3.map((data) => data.category),
-                            datasets: [
-                                {
-                                    label: "Count",
-                                    data: chart3.map((data) => data.averagePrice),
-                                    backgroundColor: commonColors,
-                                    borderRadius: 5,
-                                },
-                            ],
-                        }}
-                        options={{
-                            ...commonChartOptions,
-                            plugins: { ...commonChartOptions.plugins, title: { text: "Top-5 Expensive Categories" } },
-                        }}
-                    />
-                </div>
+                <div className={module.dataRow}>
+                    <div className={`${module.dataCard} ${module.categoryCard}`}>
+                        <Doughnut
+                            data={{
+                                labels: chart2.map((data) => data.category),
+                                datasets: [
+                                    {
+                                        label: "Count",
+                                        data: chart2.map((data) => data.productCount),
+                                        backgroundColor: commonColors,
+                                        borderColor: commonColors,
+                                    },
+                                ],
+                            }}
+                            options={{
+                                ...commonChartOptions,
+                                plugins: { ...commonChartOptions.plugins, title: { text: "Product Count Over Category" } },
+                            }}
+                        />
+                    </div>
 
-                <div className={`${module.dataCard} ${module.categoryCard}`}>
-                    <Bar
-                        data={{
-                            labels: chart4.map((data) => data.product),
-                            datasets: [
-                                {
-                                    label: "Product",
-                                    data: chart4.map((data) => data.price),
-                                    backgroundColor: commonColors,
-                                    borderRadius: 5,
-                                },
-                            ],
-                        }}
-                        options={{
-                            ...commonChartOptions,
-                            plugins: { ...commonChartOptions.plugins, title: { text: "Top-5 Expensive Products" } },
-                        }}
-                    />
+                    <div className={`${module.dataCard} ${module.categoryCard}`}>
+                        <Bar
+                            data={{
+                                labels: chart3.map((data) => data.category),
+                                datasets: [
+                                    {
+                                        label: "Count",
+                                        data: chart3.map((data) => data.averagePrice),
+                                        backgroundColor: commonColors,
+                                        borderRadius: 5,
+                                    },
+                                ],
+                            }}
+                            options={{
+                                ...commonChartOptions,
+                                plugins: { ...commonChartOptions.plugins, title: { text: "Top-5 Expensive Categories" } },
+                            }}
+                        />
+                    </div>
+
+                    <div className={`${module.dataCard} ${module.categoryCard}`}>
+                        <Bar
+                            data={{
+                                labels: chart4.map((data) => data.product),
+                                datasets: [
+                                    {
+                                        label: "Product",
+                                        data: chart4.map((data) => data.price),
+                                        backgroundColor: commonColors,
+                                        borderRadius: 5,
+                                    },
+                                ],
+                            }}
+                            options={{
+                                ...commonChartOptions,
+                                plugins: { ...commonChartOptions.plugins, title: { text: "Top-5 Expensive Products" } },
+                            }}
+                        />
+                    </div>
                 </div>
             </div>
         </div>

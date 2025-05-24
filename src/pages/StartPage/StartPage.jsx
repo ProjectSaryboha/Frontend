@@ -4,7 +4,11 @@ import module from "./StartPage.module.css"
 
 const StartPage = () => {
     return (
-        <NavLink className={module.link} to="/home">Home</NavLink>
+        <div className={module.container}>
+            <div className={module.linkContainer}>
+                <NavLink className={module.link} to="/home">Аналіз тенденцій цін на продукти у супермаркетах</NavLink>
+            </div>
+        </div>
     )
 }
 

@@ -1,0 +1,12 @@
+.btn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: black;
+  width: 150px;
+  height: 40px;
+}
+
+.btn:hover {
+  color: rgb(255, 0, 0);
+}
