@@ -10,6 +10,10 @@ import chart4 from "./../../data/chart4.json";
 
 import ChoiceBoxButton from "../../components/ChoiceBoxButton/ChoiceBoxButton";
 
+import { useEffect } from "react";
+import { useDispatch } from "react-redux";
+import { fetchCategories, fetchCounts, fetchProducts, fetchProductsByCategory } from "../../redux/products/operations";
+
 defaults.maintainAspectRatio = false;
 defaults.responsive = true;
 
@@ -50,7 +54,18 @@ const mapChartData = (chartData, labelKey, dataKey) => ({
     ],
 });
 
+
+
 const HomePage = () => {
+    const dispatch = useDispatch();
+
+    useEffect(() => {
+        dispatch(fetchProducts())
+        dispatch(fetchCategories())
+        dispatch(fetchCounts())
+        dispatch(fetchProductsByCategory())
+    }, [dispatch])
+
     return (
         <div className={module.container}>
             <ChoiceBoxButton />
