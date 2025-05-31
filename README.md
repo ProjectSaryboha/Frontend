@@ -1,12 +1,47 @@
-# React + Vite
+1. Клонуйте репозиторій:
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+   ```bash
+   git clone https://github.com/ProjectSaryboha/Frontend.git
+   ```
 
-Currently, two official plugins are available:
+2. Перейдіть до каталогу проєкту:
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+   ```bash
+   cd Frontend
+   ```
 
-## Expanding the ESLint configuration
+3. Встановіть залежності:
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+   ```bash
+   npm install
+   ```
+
+## Запуск у режимі розробки
+
+Для запуску проєкту у режимі розробки з підтримкою гарячого перезавантаження:
+
+```bash
+npm run dev
+```
+
+Це відкриє додаток у вашому браузері за адресою [http://localhost:5173](http://localhost:5173) (за замовчуванням).
+
+## Сценарії
+
+- `npm run dev` — запуск у режимі розробки
+- `npm run build` — збірка проєкту для продакшн
+- `npm run lint` — перевірка коду за допомогою ESLint
+
+## Структура проєкту
+
+- `src/` — вихідний код додатку
+- `public/` — публічні ресурси
+- `index.html` — головний HTML-файл
+- `vite.config.js` — конфігурація Vite
+- `eslint.config.js` — конфігурація ESLint
+
+## Ліцензія
+
+Для отримання додаткової інформації про Vite та його використання з React, відвідайте [офіційну документацію Vite](https://vitejs.dev/).
+
+---

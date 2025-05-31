@@ -4,15 +4,14 @@ import { Bar, Doughnut, Line } from "react-chartjs-2";
 import module from "./HomePage.module.css"
 
 import chart1 from "./../../data/chart1.json";
-import chart2 from "./../../data/chart2.json";
-import chart3 from "./../../data/chart3.json";
-import chart4 from "./../../data/chart4.json";
 
 import ChoiceBoxButton from "../../components/ChoiceBoxButton/ChoiceBoxButton";
 
 import { useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
+
 import { fetchCategories, fetchCounts, fetchProducts, fetchProductsByCategory } from "../../redux/products/operations";
+import { selectProducts, selectCategories, selectCounts } from "../../redux/products/selectors";
 
 defaults.maintainAspectRatio = false;
 defaults.responsive = true;
@@ -22,7 +21,6 @@ defaults.plugins.title.align = "start";
 defaults.plugins.title.font.size = 20;
 defaults.plugins.title.color = "black";
 
-// Common chart options
 const commonChartOptions = {
     elements: {
         line: { tension: 0.5 },
@@ -54,10 +52,11 @@ const mapChartData = (chartData, labelKey, dataKey) => ({
     ],
 });
 
-
-
 const HomePage = () => {
     const dispatch = useDispatch();
+    const productsData = useSelector(selectProducts);
+    const categoriesData = useSelector(selectCategories);
+    const countData = useSelector(selectCounts);
 
     useEffect(() => {
         dispatch(fetchProducts())
@@ -84,11 +83,11 @@ const HomePage = () => {
                     <div className={`${module.dataCard} ${module.categoryCard}`}>
                         <Doughnut
                             data={{
-                                labels: chart2.map((data) => data.category),
+                                labels: countData?.map((data) => data.category),
                                 datasets: [
                                     {
                                         label: "Count",
-                                        data: chart2.map((data) => data.productCount),
+                                        data: countData?.map((data) => data.count),
                                         backgroundColor: commonColors,
                                         borderColor: commonColors,
                                     },
@@ -104,11 +103,11 @@ const HomePage = () => {
                     <div className={`${module.dataCard} ${module.categoryCard}`}>
                         <Bar
                             data={{
-                                labels: chart3.map((data) => data.category),
+                                labels: categoriesData?.map((data) => data.category),
                                 datasets: [
                                     {
                                         label: "Count",
-                                        data: chart3.map((data) => data.averagePrice),
+                                        data: categoriesData?.map((data) => data.predicted_price),
                                         backgroundColor: commonColors,
                                         borderRadius: 5,
                                     },
@@ -124,11 +123,11 @@ const HomePage = () => {
                     <div className={`${module.dataCard} ${module.categoryCard}`}>
                         <Bar
                             data={{
-                                labels: chart4.map((data) => data.product),
+                                labels: productsData?.map((data) => data.name),
                                 datasets: [
                                     {
                                         label: "Product",
-                                        data: chart4.map((data) => data.price),
+                                        data: productsData?.map((data) => data.predicted_price),
                                         backgroundColor: commonColors,
                                         borderRadius: 5,
                                     },
@@ -136,9 +135,40 @@ const HomePage = () => {
                             }}
                             options={{
                                 ...commonChartOptions,
-                                plugins: { ...commonChartOptions.plugins, title: { text: "Top-5 Expensive Products" } },
+                                plugins: {
+                                    ...commonChartOptions.plugins,
+                                    title: {
+                                        display: true,
+                                        text: "Top-5 Expensive Products",
+                                        font: { size: 20 },
+                                    },
+                                    tooltip: {
+                                        callbacks: {
+                                            title: (tooltipItems) => {
+                                                // Показати повну назву у tooltip при наведенні
+                                                const index = tooltipItems[0].dataIndex;
+                                                return productsData[index].name;
+                                            },
+                                        },
+                                    },
+                                },
+                                scales: {
+                                    ...commonChartOptions.scales,
+                                    x: {
+                                        ticks: {
+                                            callback: function (val) {
+                                                const label = this.getLabelForValue(val);
+                                                return label.length > 10 ? label.slice(0, 10) + "…" : label;
+                                            },
+                                            font: { size: 10 },
+                                            maxRotation: 45,
+                                            minRotation: 0,
+                                        },
+                                    },
+                                },
                             }}
                         />
+
                     </div>
                 </div>
             </div>

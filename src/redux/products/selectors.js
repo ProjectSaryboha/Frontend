@@ -1,7 +1,7 @@
-export const selectCategories = (state) => state.products.categories;
-export const selectProducts = (state) => state.products.products;
-export const selectCounts = (state) => state.products.counts;
+export const selectCategories = (state) => state.data.categories;
+export const selectProducts = (state) => state.data.products;
+export const selectCounts = (state) => state.data.counts;
 export const selectProductsByCategory = (state) =>
-  state.products.productsByCategory;
-export const selectIsLoading = (state) => state.products.isLoading;
-export const selectError = (state) => state.products.error;
+  state.data.productsByCategory;
+export const selectIsLoading = (state) => state.data.isLoading;
+export const selectError = (state) => state.data.error;
