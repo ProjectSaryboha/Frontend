@@ -41,12 +41,26 @@ export const fetchCounts = createAsyncThunk(
   }
 );
 
+// export const fetchProductsByCategory = createAsyncThunk(
+//   "products/fetchProductsByCategory",
+//   async (_, thunkApi) => {
+//     try {
+//       const response = await productInstance.get(
+//         "products-by-category?category=Овочі та фрукти"
+//       );
+//       return response.data;
+//     } catch (error) {
+//       return thunkApi.rejectWithValue(error.message);
+//     }
+//   }
+// );
+
 export const fetchProductsByCategory = createAsyncThunk(
   "products/fetchProductsByCategory",
-  async (_, thunkApi) => {
+  async (category, thunkApi) => {
     try {
       const response = await productInstance.get(
-        "products-by-category?category=Овочі та фрукти"
+        `products-by-category?category=${encodeURIComponent(category)}`
       );
       return response.data;
     } catch (error) {

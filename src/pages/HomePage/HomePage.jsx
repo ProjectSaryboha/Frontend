@@ -3,15 +3,13 @@ import { Bar, Doughnut, Line } from "react-chartjs-2";
 
 import module from "./HomePage.module.css"
 
-import chart1 from "./../../data/chart1.json";
+import BackButton from "../../components/BackButton/BackButton";
 
-import ChoiceBoxButton from "../../components/ChoiceBoxButton/ChoiceBoxButton";
-
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 
 import { fetchCategories, fetchCounts, fetchProducts, fetchProductsByCategory } from "../../redux/products/operations";
-import { selectProducts, selectCategories, selectCounts } from "../../redux/products/selectors";
+import { selectProducts, selectCategories, selectCounts, selectProductsByCategory } from "../../redux/products/selectors";
 
 defaults.maintainAspectRatio = false;
 defaults.responsive = true;
@@ -58,27 +56,60 @@ const HomePage = () => {
     const categoriesData = useSelector(selectCategories);
     const countData = useSelector(selectCounts);
 
+    const productsByCategory = useSelector(selectProductsByCategory);
+    const [selectedCategory, setSelectedCategory] = useState("Овочі та фрукти");
+
+
     useEffect(() => {
         dispatch(fetchProducts())
         dispatch(fetchCategories())
         dispatch(fetchCounts())
-        dispatch(fetchProductsByCategory())
-    }, [dispatch])
+        dispatch(fetchProductsByCategory(selectedCategory))
+    }, [dispatch, selectedCategory])
 
     return (
         <div className={module.container}>
-            <ChoiceBoxButton />
+            <BackButton />
             <div className={module.childContainer}>
                 <div className={`${module.dataCard} ${module.categoryCard}`}>
+                    <div className={module.selectDiv}>
+                        <p>Category: </p>
+                        <select
+                            className={module.selectCategory}
+                            value={selectedCategory}
+                            onChange={(e) => setSelectedCategory(e.target.value)}
+                        >
+                            <option>Овочі та фрукти</option>
+                            <option>Молочні продукти та яйця</option>
+                            <option>Хлібобулочні вироби</option>
+                            <option>Напої безалкогольні</option>
+                            <option>Кава та чай</option>
+                        </select>
+                    </div>
+
                     <Line
-                        data={mapChartData(chart1, "product", "price")}
+                        data={mapChartData(productsByCategory.slice(0, 20), "name", "predicted_price")}
                         options={{
                             ...commonChartOptions,
-                            plugins: { ...commonChartOptions.plugins, title: { text: "Product Price Over Time" } },
+                            plugins: {
+                                ...commonChartOptions.plugins,
+                                title: { text: `Ціни: ${selectedCategory}` },
+                            },
+                            scales: {
+                                ...commonChartOptions.scales,
+                                x: {
+                                    ticks: {
+                                        callback: function (val) {
+                                            const label = this.getLabelForValue(val);
+                                            return label.length > 10 ? label.slice(0, 10) + "…" : label;
+                                        },
+                                        font: { size: 10 },
+                                    },
+                                },
+                            },
                         }}
                     />
                 </div>
-
                 <div className={module.dataRow}>
                     <div className={`${module.dataCard} ${module.categoryCard}`}>
                         <Doughnut
@@ -86,7 +117,7 @@ const HomePage = () => {
                                 labels: countData?.map((data) => data.category),
                                 datasets: [
                                     {
-                                        label: "Count",
+                                        label: "Рахунок",
                                         data: countData?.map((data) => data.count),
                                         backgroundColor: commonColors,
                                         borderColor: commonColors,
@@ -95,7 +126,7 @@ const HomePage = () => {
                             }}
                             options={{
                                 ...commonChartOptions,
-                                plugins: { ...commonChartOptions.plugins, title: { text: "Product Count Over Category" } },
+                                plugins: { ...commonChartOptions.plugins, title: { text: "Кількість товарів понад категорію" } },
                             }}
                         />
                     </div>
@@ -106,7 +137,7 @@ const HomePage = () => {
                                 labels: categoriesData?.map((data) => data.category),
                                 datasets: [
                                     {
-                                        label: "Count",
+                                        label: "Рахунок",
                                         data: categoriesData?.map((data) => data.predicted_price),
                                         backgroundColor: commonColors,
                                         borderRadius: 5,
@@ -115,7 +146,7 @@ const HomePage = () => {
                             }}
                             options={{
                                 ...commonChartOptions,
-                                plugins: { ...commonChartOptions.plugins, title: { text: "Top-5 Expensive Categories" } },
+                                plugins: { ...commonChartOptions.plugins, title: { text: "Найдорощі категорії" } },
                             }}
                         />
                     </div>
@@ -126,7 +157,7 @@ const HomePage = () => {
                                 labels: productsData?.map((data) => data.name),
                                 datasets: [
                                     {
-                                        label: "Product",
+                                        label: "Продукти",
                                         data: productsData?.map((data) => data.predicted_price),
                                         backgroundColor: commonColors,
                                         borderRadius: 5,
@@ -139,13 +170,12 @@ const HomePage = () => {
                                     ...commonChartOptions.plugins,
                                     title: {
                                         display: true,
-                                        text: "Top-5 Expensive Products",
+                                        text: "Найдорощі продукти",
                                         font: { size: 20 },
                                     },
                                     tooltip: {
                                         callbacks: {
                                             title: (tooltipItems) => {
-                                                // Показати повну назву у tooltip при наведенні
                                                 const index = tooltipItems[0].dataIndex;
                                                 return productsData[index].name;
                                             },
